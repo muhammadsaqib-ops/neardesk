@@ -29,3 +29,42 @@ jobs:
         with:
           name: neardesk
           path: target/release/neardesk.exe
+
+  # On a green main build, publish a release when the crate version is new.
+  # Bump `version` in Cargo.toml to cut a release; otherwise this is a no-op.
+  release:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine version tag
+        id: ver
+        run: |
+          v=$(grep -m1 '^version' Cargo.toml | sed -E 's/.*"(.*)".*/\1/')
+          echo "tag=v$v" >> "$GITHUB_OUTPUT"
+          if git rev-parse "v$v" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Download built exe
+        if: steps.ver.outputs.exists == 'false'
+        uses: actions/download-artifact@v4
+        with:
+          name: neardesk
+          path: dist
+
+      - name: Publish release
+        if: steps.ver.outputs.exists == 'false'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.ver.outputs.tag }}
+          files: dist/neardesk.exe
+          generate_release_notes: true

